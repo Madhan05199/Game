@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Document</title>
+</head>
+<style>
+*{
+    padding:0;
+    margin:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding:20px;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    
+}
+
+.main{
+    background: linear-gradient(#f7f5de,#F3E403);
+    box-shadow:0px 0px 3px rgba(0,0,0,0.5),3px 3px 5px rgba(0,0,0,0.3);
+    padding:15px;
+    border-radius:15px;
+}
+
+.user,.computer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container span{
+    color: red;
+    font-family:cursive;
+    font-weight:900;
+    font-size:22px;
+}
+img{
+    width:280px;
+}
+
+button{
+    padding:10px 15px;
+    display:inline-block;
+    border:0;
+    box-shadow:0px 2px 3px gray;
+    cursor: pointer;
+    background:linear-gradient(to left, #9ABF1C,#F5F7F0);
+    color:black;
+    font-weight:900;
+    border-radius:5px;
+}
+
+h2{
+     color: red;
+    font-family:cursive;
+    font-weight:900;
+}
+
+h1{
+    text-align: center;
+    padding:10px;
+    font-family: sans-serif;
+}
+
+h3{
+    font-family: cursive;
+    color:rgb(117, 13, 13);
+}
+
+.board{
+    display: flex;
+    justify-content: space-between
+}
+
+.user img{
+    width:150px;
+    cursor: pointer;
+
+}
+
+.image{
+    display:flex;
+    flex-direction: column;
+}
+
+.test{
+    text-align: center;
+    background-color: #9ABF1C;
+    color: #F5F7F0;
+    margin-top:15px;
+    border-radius:8px;
+}
+
+.userimg{
+    border-radius:30px;
+}
+
+
+.pop-up{
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background-color:white;
+    width:450px;
+    height:300px;
+    box-shadow:0px 25px 50px rgba(0,0,0,0.1),
+    0px 0px 0px 1000px rgba(0,0,0,0.5);
+    border-radius:15px;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    visibility: hidden;
+}
+
+.pop-up{
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+.pop-up span{
+    font-weight:600;
+    font-size:25px;
+}
+
+.pop-up .close{
+    position: absolute;
+    top:0;
+    right: 0;
+    background-color: red;
+    padding:7px;
+    width:50px;
+    text-align: center;
+    color: white;
+    border-bottom-left-radius:15px;
+    cursor: pointer;
+}
+
+.final{
+    margin-top:25px;
+    font-size:25px;
+    font-weight:600;
+    color:red;
+    font-family: cursive;
+}
+
+@media(max-width:600px){
+    .main{
+        width:100%;
+        height:420px;
+        margin:0px px;
+    }
+    .container{
+   
+    }
+
+    .pop-up{
+        width:95%;
+        padding:10px;
+    }
+
+    .user img{
+        width:90px;
+        cursor: pointer;
+
+    }
+
+    img{
+        width:200px;
+    }
+
+    .board{
+        max-width:100%;
+    }
+    .board h3{
+        font-size:15px;
+    }
+
+    .final{
+        font-size:18px;
+    }
+    .result{
+        font-size:21px;
+    }
+}
+</style>
+<body>
+    <div class="main">
+        <div class="board">
+            <h3>Your Score: <span class="score">0</span></h3>
+            <h3>Computer Score: <span class="score2">0</span></h3>
+        </div>
+        
+        <h1 class="result"></h1>
+        <div class="container">
+            <div class="user">
+                <span>You</span>
+                <div class="image">
+                    <img src=./images/stone.png  onclick="handlefunction(event)"  class="userimg stone" alt="img"> 
+                    <img src=./images/paper.png  onclick="handlefunction(event)" class="userimg paper" alt="img"> 
+                    <img src=./images/scissor.png  onclick="handlefunction(event)" class="userimg scissor" alt="img"> 
+                </div>  
+            </div>
+            <!-- <button onclick="handlefunction()">click here</button> -->
+            <div class="computer">
+                <span>Computer</span>
+                <div class="image-2">
+                    <img src="./images/scissor.png" class="comimg"  alt="img">
+                </div>
+                <h2></h2>
+            </div>
+        </div> 
+        <h2 class="test"></h2> 
+    </div>
+    <div class="pop-up">
+        <div onclick="closeFunction()" class="close">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <h1 class="news"></h1>
+        <span class="news2"></span>
+    </div>
+
+    <p class="final"> Whoever reaches  Score 10 first, is the winner</p>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+//pop up section====
+let popup=document.querySelector(".pop-up") 
+let news=document.querySelector(".news")
+let news2=document.querySelector(".news2")
+function closeFunction(){
+    popup.style.visibility="hidden"
+}
+//================
+ let json2=[
+    {image:"./images/stone.png",
+    name:"Stone"},
+    {image:"./images/scissor.png",
+    name:"Scissor"},
+    {image:"./images/paper.png",
+    name:"Paper"}
+    ];
+
+
+let image=document.querySelectorAll('.userimg');
+let image2=document.querySelector(".comimg");
+let name=document.getElementsByTagName("h2");
+let result=document.querySelector(".result");
+let score=document.querySelector(".score");
+let Comscore=document.querySelector(".score2");
+let userselect=document.querySelector(".test");
+console.log(userselect)
+let count=0;
+let count2=0;
+score.innerHTML=count;
+Comscore.innerHTML=count2;
+ function handlefunction(e){
+    //user game====
+    e.target.classList[1]
+    if( e.target.classList[1]==="paper"){
+        userselect.innerHTML="Paper"
+        image[1].style.border="5px solid #54ACE8";
+        image[0].style.border="none";
+        image[2].style.border="none";
+    }else if(e.target.classList[1]==="stone"){
+        userselect.innerHTML="Stone"
+        image[1].style.border="none";
+        image[0].style.border="5px solid #54ACE8";
+        image[2].style.border="none";
+    }else if(e.target.classList[1]==="scissor"){
+        userselect.innerHTML="Scissor";
+        image[2].style.border="5px solid #54ACE8";
+        image[0].style.border="none";
+        image[1].style.border="none";
+    }
+    //computer game===
+    let num2= Math.floor(Math.random()*json2.length)
+    image2.src=json2[num2].image;
+    name[0].innerHTML=json2[num2].name;
+
+    //condition====
+
+    if(e.target.classList[1]==="paper" && json2[num2].name==="Stone"){
+
+        result.innerHTML="You Win"; 
+        count++;
+        score.innerHTML=count;
+    }else if(e.target.classList[1]==="stone" && json2[num2].name==="Paper"){
+
+        result.innerHTML="Computer Win";
+        count2++;
+        Comscore.innerHTML=count2;
+    }else if(e.target.classList[1]==="scissor" && json2[num2].name==="Paper"){
+
+        result.innerHTML="You Win";
+        count++
+        score.innerHTML=count;
+    }else if(e.target.classList[1]==="paper" && json2[num2].name==="Scissor"){
+
+        result.innerHTML="Computer Win";
+        count2++
+        Comscore.innerHTML=count2;
+    }else if(e.target.classList[1]==="stone" && json2[num2].name==="Scissor"){
+
+        result.innerHTML="You Win";
+        count++
+        score.innerHTML=count;
+    }else if(e.target.classList[1]==="scissor" && json2[num2].name==="Stone"){
+
+        result.innerHTML="Computer Win";
+        count2++
+        Comscore.innerHTML=count2;
+    }else if(e.target.classList[1]==="scissor" && json2[num2].name==="Scissor"){
+
+        result.innerHTML="Game tie";
+    }else if(e.target.classList[1]==="stone" && json2[num2].name==="Stone"){
+
+        result.innerHTML="Game tie";
+    }else if(e.target.classList[1]==="paper" && json2[num2].name==="Paper"){
+
+        result.innerHTML="Game tie";
+    }else{
+        alert("retry")
+    }
+
+    if(count===10 || count2===10 ){
+        if(count===10){
+
+           popup.style.visibility="visible" 
+           news.innerHTML="Congragulations 🎉🎊"
+            news2.innerHTML="You have Won...🏆";
+           confetti();
+
+        }else{
+            popup.style.visibility="visible"
+            news.innerHTML="Better Luck next time...😓😕"
+            news2.innerHTML="You Lose...";
+        }
+    
+    count=0
+    score.innerHTML=count;
+    count2=0;
+    Comscore.innerHTML=count2;
+    }
+}
+
+
+</script>
+</body>
+</html>
